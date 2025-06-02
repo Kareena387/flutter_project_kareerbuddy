@@ -1,5 +1,6 @@
-import 'package:kareerbuddy/color.dart';
-import 'package:kareerbuddy/views/home_page.dart';
+import 'package:kareerbuddy/utils/colors.dart';
+import 'package:kareerbuddy/utils/image_paths.dart';
+import 'package:kareerbuddy/views/login_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -9,7 +10,9 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: HomePage());
+    return MaterialApp(
+      home: LoginPage(),
+    );
   }
 }
 
