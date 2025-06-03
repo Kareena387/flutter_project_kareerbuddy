@@ -1,9 +1,13 @@
 import 'package:kareerbuddy/controllers/home_page_controller.dart';
+import 'package:kareerbuddy/image_paths.dart';
+import 'package:kareerbuddy/views/details_page.dart';
+import 'package:kareerbuddy/views/first_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 class HomePage extends StatelessWidget {
-  //to bring home page controllers in the view
-  final c = key.put((HomePageController()));
+  //to bring home page controller in the view
+  final c = Get.put((HomePageController()));
 
   HomePage({super.key});
 
@@ -12,24 +16,51 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text("Home Page")),
       body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            children: [
-              //to reflect observable variable changes
-              Obx((){
-                return Text(
-                  c.count.value.toString(),
-                  style: TextStyle(fontSize: 32, fontWeight: FontWeight.w800),
-                );
-              }),
-              Text("this is the count")
-            ],
-          ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            InkWell(
+              onTap: (){
+                Get.to(()=>DetailsPage(),arguments: c.product);
+              },
+              child: Container(
+                padding: EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Image.asset(
+                      c.product['imageUrl'],
+                      height: Get.height / 4,
+                      width: Get.height / 4,
+                      fit: BoxFit.fill,
+                    ),
+                    Text(
+                      c.product["name"],
+                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
+                    ),
+                    Text(
+                      c.product["category"],
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    Text(
+                      c.product['price'],
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        c.increaseCount();
-      }),
     );
   }
 }

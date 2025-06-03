@@ -1,16 +1,13 @@
+import 'package:kareerbuddy/image_paths.dart';
 import 'package:get/get.dart';
 
-//variable declaration
-//logic work
-// api calls
 class HomePageController extends GetxController {
-
-  //for making the variable observable.
-  RxInt count = 0.obs;
-
-
-  void increaseCount() {
-    count = count + 1;
-    print("the count is $count");
-  }
+  Map product = {
+    "imageUrl": ImagePaths.womenImage,
+    "name": "women",
+    "category": "Human",
+    "price": "Invaluable",
+    "detail":
+    "Women in Tech",
+  };
 }
