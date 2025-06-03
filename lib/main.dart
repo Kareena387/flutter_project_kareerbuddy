@@ -1,5 +1,5 @@
 import 'package:kareerbuddy/color.dart';
-import 'package:kareerbuddy/views/home_page.dart';
+import 'package:kareerbuddy/views/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,8 +10,7 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    //use getmaterialapp instead of material app in getx
-    return GetMaterialApp(home: HomePage());
+    return GetMaterialApp(home: LoginPage());
   }
 }
 
