@@ -1,23 +1,59 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 //variable declaration
 //logic work
 // api calls
 class HomePageController extends GetxController {
-  //making the fruits list observable
-  RxList<String> fruits = ['mango', 'banana', 'apple', 'peach'].obs;
-  TextEditingController fruitName = TextEditingController();
+  //for making the variable observable.
+  RxInt count = 0.obs;
 
-  void addFruits() {
-    if (fruitName.text.isNotEmpty) {
-      fruits.add(fruitName.text);
-    }
+  RxBool isLiked = true.obs;
+
+  void toggleLikeStatus() {
+    isLiked.value = !isLiked.value;
   }
 
-  void deleteFruit(int index) {
-    if(index<fruits.length){
-      fruits.removeAt(index);
-    }
+  void increaseCount() {
+    count = count + 1;
+    print("the count is ${count}");
+  }
+
+  void decreaseCount() {
+    count = count - 1;
+    print("the count is ${count}");
+  }
+
+  void resetCount() {
+    count.value = 0;
+    print("the count is ${count}");
+  }
+
+  RxList pages =
+      [
+        {"icon": Icons.home, "label": "Home"},//0
+        {"icon": Icons.explore, "label": "Explore"},//1
+        {"icon": Icons.person, "label": "Profile"},//2
+        {"icon": Icons.settings, "label": "Settings"},//3
+      ].obs;
+
+  RxInt currentIndex=0.obs;
+
+
+  void changePage(int index){
+    currentIndex.value=index;
+  }
+
+  @override
+  void onInit(){
+    print("home page controller is called");
+    super.onInit();
+  }
+
+  @override
+  void dispose() {
+    print("home page controller is disposed");
+    // TODO: implement dispose
+    super.dispose();
   }
 }
