@@ -1,48 +1,54 @@
-import 'package:kareerbuddy/controllers/home_page_controller.dart';
+import 'package:kareerbuddy/color.dart';
+import 'package:kareerbuddy/views/home_page.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
-class HomePage extends StatelessWidget {
-  //to bring home page controller in the view
-  final c = Get.put((HomePageController()));
+void main() async {
+  await GetStorage.init();
+  runApp(MyApp());
+}
 
-  HomePage({super.key});
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(home: HomePage());
+  }
+}
+
+class CustomButton extends StatelessWidget {
+  final String title;
+
+  CustomButton({required this.title});
+
+  Color _getColorByTitle(String title) {
+    switch (title.toLowerCase()) {
+      case 'login':
+        return AppColors.primaryColor;
+      case 'sign up':
+        return AppColors.signUpColor;
+      case 'refreshing':
+        return AppColors.refreshingColor;
+      case 'logout':
+        return Colors.red;
+      default:
+        return Colors.grey;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("Home Page")),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                TextField(
-                  controller: c.userName,
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 40),
-                ElevatedButton(
-                  onPressed: () {
-                    c.saveLocally();
-                  },
-                  child: Text("Save"),
-                ),
-                SizedBox(height: 40),
-                Text("The user name is ${c.userName.text}"),
-              ],
-            ),
-          ),
-        ),
+    return ElevatedButton(
+      onPressed: () {
+        // Optional: Show snackbar or print message
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('$title button pressed')));
+      },
+      style: ElevatedButton.styleFrom(
+        backgroundColor: _getColorByTitle(title),
+        padding: EdgeInsets.symmetric(vertical: 16),
       ),
+      child: Text(title.toUpperCase(), style: TextStyle(fontSize: 16)),
     );
   }
 }
