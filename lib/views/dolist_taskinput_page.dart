@@ -29,6 +29,7 @@ class TaskInputPage extends StatelessWidget {
               },
               child: Text("Add Task"),
             ),
+            SizedBox(height: 20), // Adds space between buttons
             ElevatedButton(
               onPressed: () => Get.to(TaskListPage()),
               child: Text("View Tasks"),
