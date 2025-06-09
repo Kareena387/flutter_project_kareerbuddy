@@ -1,3 +1,3 @@
 class StorageKeys{
-  static const String PROFILE_KEY="PROFILE-KEY";
+  static const String firstTime="firstTime";
 }
