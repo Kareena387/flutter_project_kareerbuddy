@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:kareerbuddy/controllers/home_page_controller.dart';
+import 'package:kareerbuddy/models/joke_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,33 +16,35 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text("Home Page")),
       body: SingleChildScrollView(
-        child: Center(
-          child: Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                TextField(
-                  controller: c.userName,
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ElevatedButton(
+                onPressed: () async {
+                  c.fetchJoke();
+                },
+                child: Text("Hit api"),
+              ),
+
+              SizedBox(height: 20),
+              Obx(() {
+                return Column(
+                  children: [
+                    Text(
+                      "Question: ${c.joke.value?.setup ?? ""}",
+                      style: TextStyle(fontSize: 22),
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black),
+                    Text(
+                      "Answer: ${c.joke.value?.punchline ?? ""}",
+                      style: TextStyle(fontSize: 22),
                     ),
-                  ),
-                ),
-                SizedBox(height: 40),
-                ElevatedButton(
-                  onPressed: () {
-                    c.saveLocally();
-                  },
-                  child: Text("Save"),
-                ),
-                SizedBox(height: 40),
-                Text("The user name is ${c.userName.text}"),
-              ],
-            ),
+                  ],
+                );
+              })
+
+            ],
           ),
         ),
       ),

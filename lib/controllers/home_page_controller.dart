@@ -1,26 +1,26 @@
-import 'package:kareerbuddy/helpers/storage_helpers.dart';
-import 'package:flutter/cupertino.dart';
+import 'dart:convert';
+
+import 'package:kareerbuddy/models/joke_model.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 
 //variable declaration
 //logic work
 // api calls
 class HomePageController extends GetxController {
-  TextEditingController userName = TextEditingController();
+  //nullable
+  Rxn<JokeModel> joke = Rxn();
 
-  @override
-  onInit() {
-    fetchUserName();
-    super.onInit();
-  }
+  fetchJoke() async {
+    var url = Uri.parse("https://official-joke-api.appspot.com/random_joke");
 
-  void saveLocally() {
-    StorageHelpers.saveUserName(userName.text);
-  }
+    //2. Hitting the uri
+    http.Response response = await http.get(url);
 
-  void fetchUserName() {
-print(StorageHelpers.fetchUserName());
-    userName.text = StorageHelpers.fetchUserName() ?? "no user name";
-    print(userName);
+    //3. Converting the uri to map
+    dynamic data = json.decode(response.body);
+
+    //4. Converting the map to custom flutter model
+    joke.value = JokeModel.fromJson(data);
   }
 }
