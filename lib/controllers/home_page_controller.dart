@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:kareerbuddy/models/joke_model.dart';
+import 'package:kareerbuddy/models/to_do_list_model.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -8,11 +8,21 @@ import 'package:http/http.dart' as http;
 //logic work
 // api calls
 class HomePageController extends GetxController {
-  //nullable
-  Rxn<JokeModel> joke = Rxn();
+  RxnString imageUrl = RxnString();
+  RxBool isLoading = false.obs;
+  RxList tasks = [].obs;
 
-  fetchJoke() async {
-    var url = Uri.parse("https://official-joke-api.appspot.com/random_joke");
+
+  @override
+
+  void onInit(){
+    fetchToDoList();
+    super.onInit();
+  }
+
+  fetchImage() async {
+    isLoading.value = true;
+    var url = Uri.parse("https://dog.ceo/api/breeds/image/random");
 
     //2. Hitting the uri
     http.Response response = await http.get(url);
@@ -20,7 +30,26 @@ class HomePageController extends GetxController {
     //3. Converting the uri to map
     dynamic data = json.decode(response.body);
 
+    imageUrl.value = data['message'];
+
+    isLoading.value = false;
+    print(imageUrl.value);
     //4. Converting the map to custom flutter model
-    joke.value = JokeModel.fromJson(data);
+  }
+
+  fetchToDoList() async {
+    isLoading.value = true;
+    var url = Uri.parse("https://dummyjson.com/todos");
+
+    //2. Hitting the uri
+    http.Response response = await http.get(url);
+
+    //3. Converting the uri to map
+    dynamic data = json.decode(response.body);
+    tasks.value = toDoListFromJson(data['todos']);
+    print(data);
+    isLoading.value = false;
+    print(tasks.value);
+    //4. Converting the map to custom flutter model
   }
 }
