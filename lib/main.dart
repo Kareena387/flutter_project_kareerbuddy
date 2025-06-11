@@ -1,7 +1,9 @@
-import 'package:kareerbuddy/color.dart';
+import 'package:kareerbuddy/constant/color.dart';
+import 'package:kareerbuddy/constant/pages.dart';
 import 'package:kareerbuddy/views/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:get/get.dart';
 
 void main() async {
   await GetStorage.init();
@@ -11,7 +13,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: HomePage());
+    return GetMaterialApp(initialRoute: HomePage.routeName, getPages: getPages);
   }
 }
 
