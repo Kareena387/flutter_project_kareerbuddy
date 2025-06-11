@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 
 class HomePage extends StatelessWidget {
   //to bring home page controller in the view
-  static const routeName="/homePage";
+  static const routeName = "/homePage";
   final c = Get.put((HomePageController()));
 
   HomePage({super.key});
@@ -37,7 +37,7 @@ class HomePage extends StatelessWidget {
                       itemBuilder: (context, index) {
                         var recipe = c.recipes[index];
                         return InkWell(
-                          onTap:(){
+                          onTap: () {
                             c.onCardTap(recipe.id!);
                           },
                           child: Container(
@@ -61,21 +61,125 @@ class HomePage extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Expanded(child: Image.network(recipe.image ?? "")),
-                                Text(recipe.name ?? "",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600),),
+                                Expanded(
+                                  child: Image.network(recipe.image ?? ""),
+                                ),
+                                Text(
+                                  recipe.name ?? "",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
                                 Row(
                                   children: [
-                                    Text("Difficulty: ",style: TextStyle(fontSize: 12,color: Colors.grey),),
-                                    Text(recipe.difficulty??"",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w600),),
+                                    Text(
+                                      "Difficulty: ",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    Text(
+                                      recipe.difficulty ?? "",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
                                   ],
                                 ),
                                 Row(
                                   children: [
-                                    Text("Cuisine: ",style: TextStyle(fontSize: 12,color: Colors.grey),),
-                                    Text(recipe.cuisine??"",style: TextStyle(fontSize: 12,fontWeight: FontWeight.w600),),
+                                    Text(
+                                      "Cuisine: ",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    Text(
+                                      recipe.cuisine ?? "",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
                                   ],
-                                )
-
+                                ),
+                                Row(
+                                  children: (recipe.mealType ?? [])
+                                      .map(
+                                        (meal) => Text(
+                                          meal,
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      )
+                                      .toList(),
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "Servings: ",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    Text(
+                                      recipe.servings != null
+                                          ? recipe.servings.toString()
+                                          : "Not specified",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "caloriesPerServing: ",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    Text(
+                                      recipe.caloriesPerServing != null
+                                          ? recipe.caloriesPerServing.toString()
+                                          : "Not specified",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                 Row(
+                                  children: [
+                                    Text(
+                                      "cookTimeMinutes: ",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    Text(
+                                      recipe.cookTimeMinutes != null
+                                          ? recipe.cookTimeMinutes.toString()
+                                          : "Not specified",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ],
                             ),
                           ),
