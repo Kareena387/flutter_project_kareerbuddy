@@ -1,19 +1,18 @@
 import 'package:kareerbuddy/constant/color.dart';
 import 'package:kareerbuddy/constant/pages.dart';
+import 'package:kareerbuddy/views/auth/login_page.dart';
 import 'package:kareerbuddy/views/home_page.dart';
 import 'package:flutter/material.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
 
-void main() async {
-  await GetStorage.init();
+void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(initialRoute: HomePage.routeName, getPages: getPages);
+    return GetMaterialApp(initialRoute: LoginPage.routeName, getPages: getPages);
   }
 }
 
