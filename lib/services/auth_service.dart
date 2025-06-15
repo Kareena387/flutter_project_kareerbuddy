@@ -5,25 +5,29 @@ import 'package:kareerbuddy/core_storage/core_storage_service.dart';
 import 'package:kareerbuddy/model/login_response.dart';
 import 'package:kareerbuddy/model/user_model.dart';
 
-//authService handles API communication
+/// AuthService handles network calls related to authentication
 class AuthService {
-  //Sends login request and saves token
+  /// Sends login request and saves token on success
   Future<bool> login(String username, String password) async {
     final response = await http.post(
       Uri.parse(Api.loginUrl),
-      headers: {'Content-Type': ' application/json'},
+      headers: {'Content-Type': 'application/json'},
       body: jsonEncode({'username': username, 'password': password}),
     );
 
     if (response.statusCode == 200) {
+      // Parse successful login response
       final data = LoginResponse.fromJson(jsonDecode(response.body));
-      CoreStorageService.saveToken(data.token); // Save token on success
+      CoreStorageService.saveToken(data.token);
       return true;
+    } else {
+      // Handle and throw API error message
+      final Map<String, dynamic> error = jsonDecode(response.body);
+      throw error['message'] ?? 'Login failed';
     }
-    return false; // Login failed
   }
 
-  // Gets user profile using stored token
+  /// Fetches user profile using stored token
   Future<UserModel?> getProfile() async {
     final token = CoreStorageService.getToken();
     if (token == null) return null;
@@ -36,6 +40,8 @@ class AuthService {
     if (response.statusCode == 200) {
       return UserModel.fromJson(jsonDecode(response.body));
     }
-    return null;
+
+    // Optional: Log error or handle unauthorized
+    return null;// we can wrap this in getProfile() ina try/catch block in Homepage
   }
 }
