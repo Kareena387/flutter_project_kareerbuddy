@@ -1,55 +1,30 @@
-import 'package:kareerbuddy/constant/color.dart';
-import 'package:kareerbuddy/constant/pages.dart';
 import 'package:kareerbuddy/views/auth/login_page.dart';
 import 'package:kareerbuddy/views/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
-void main() {
+void main() async {
+  await GetStorage.init();//initialize getstorage before app starts
   runApp(MyApp());
 }
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return GetMaterialApp(initialRoute: LoginPage.routeName, getPages: getPages);
-  }
+class MyApp extends StatelessWidget{
+  final box = GetStorage();
 }
 
-class CustomButton extends StatelessWidget {
-  final String title;
-
-  CustomButton({required this.title});
-
-  Color _getColorByTitle(String title) {
-    switch (title.toLowerCase()) {
-      case 'login':
-        return AppColors.primaryColor;
-      case 'sign up':
-        return AppColors.signUpColor;
-      case 'refreshing':
-        return AppColors.refreshingColor;
-      case 'logout':
-        return Colors.red;
-      default:
-        return Colors.grey;
-    }
-  }
-
-  @override
+@override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        // Optional: Show snackbar or print message
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('$title button pressed')));
-      },
-      style: ElevatedButton.styleFrom(
-        backgroundColor: _getColorByTitle(title),
-        padding: EdgeInsets.symmetric(vertical: 16),
-      ),
-      child: Text(title.toUpperCase(), style: TextStyle(fontSize: 16)),
+    // Check if token exists to decide initial route
+    final initialRoute = box.read('token') != null ? HomePage.routeName : LoginPage.routeName;
+
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      initialRoute: initialRoute,
+      getPages: [
+        GetPage(name: LoginPage.routeName, page: () => LoginPage()),
+        GetPage(name: HomePage.routeName, page: () => HomePage()),
+      ],
     );
   }
+
 }
