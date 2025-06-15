@@ -33,7 +33,7 @@ class LoginController extends GetxController {
         Get.offAllNamed(HomePage.routeName);
       }
     } catch (e) {
-      // If login fails (API error), show  error message
+      // If login fails (API error), show snackbar with error message
       Get.snackbar("Login Failed", e.toString());
     }
   }

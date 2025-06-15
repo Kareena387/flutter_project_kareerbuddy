@@ -42,6 +42,6 @@ class AuthService {
     }
 
     // Optional: Log error or handle unauthorized
-    return null;// we can wrap this in getProfile() ina try/catch block in Homepage
+    return null;
   }
 }
