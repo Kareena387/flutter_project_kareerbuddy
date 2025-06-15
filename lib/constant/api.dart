@@ -1,4 +1,5 @@
 class Api {
-  static String loginUrl="https://dummyjson.com/auth/login";
-  static String authUrl = "https://dummyjson.com/docs/auth";
+  static const String baseUrl = "https://dummyjson.com";
+  static const String loginUrl = "$baseUrl/auth/login";
+  static const String profileUrl = "$baseUrl/auth/me";
 }
