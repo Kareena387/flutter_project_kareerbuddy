@@ -4,18 +4,24 @@ import 'package:kareerbuddy/constant/api.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:kareerbuddy/services/auth_service.dart';
+import 'package:kareerbuddy/views/home_page.dart';
+
+// Login controller manages input and handles logic
 
 class LoginController extends GetxController {
-  TextEditingController username = TextEditingController();
-  TextEditingController password = TextEditingController();
+  TextEditingController username = TextEditingController(); // Username input
+  TextEditingController password = TextEditingController(); // Password input
 
-  login() async {
-    var uri = Uri.parse(Api.loginUrl);
-    // var headers = {'Content-Type': 'application/json'};
-    var body = {"username": username.text, "password": password.text};
-    print(body);
-    http.Response response = await http.post(uri, body: body);
-    dynamic data = json.decode(response.body);
-    print(data);
+  final AuthService _authService = AuthService();
+
+  // Executes login process
+  void login() async {
+    final success = await _authService.login(username.text, password.text);
+    if (success) {
+      Get.offAllNamed(HomePage.routeName); // Navigate to home
+    } else {
+      Get.snackbar("Login Failed", "Invalid username or password"); // Show error
+    }
   }
 }
