@@ -4,7 +4,7 @@ class LoginResponse {
   LoginResponse({required this.token});
 
   //converts JSOn to Dart object
-  factory LoginResponse.formJson(Map<String, dynamic> json){
+  factory LoginResponse.fromJson(Map<String, dynamic> json){
     return LoginResponse(token: json['token']);
   }
 }

@@ -1,9 +1,11 @@
 import 'dart:convert';
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
+import 'package:kareerbuddy/constant/api.dart';
 import 'package:kareerbuddy/core_storage/core_storage_service.dart';
 import 'package:kareerbuddy/model/login_response.dart';
 import 'package:kareerbuddy/model/user_model.dart';
 
+//authService handles API communication
 class AuthService {
   //Sends login request and saves token
   Future<bool> login(String username, String password) async {

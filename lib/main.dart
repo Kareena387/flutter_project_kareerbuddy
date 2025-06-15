@@ -4,27 +4,23 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
+
 void main() async {
-  await GetStorage.init();//initialize getstorage before app starts
-  runApp(MyApp());
-}
-class MyApp extends StatelessWidget{
-  final box = GetStorage();
+  await GetStorage.init(); // Initialize GetStorage for local storage
+  runApp(MyApp()); // Start the app
 }
 
-@override
+class MyApp extends StatelessWidget {
+  @override
   Widget build(BuildContext context) {
-    // Check if token exists to decide initial route
-    final initialRoute = box.read('token') != null ? HomePage.routeName : LoginPage.routeName;
-
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: initialRoute,
-      getPages: [
+      home: LoginPage(), // Initial screen
+      getPages: [ // Routing table
         GetPage(name: LoginPage.routeName, page: () => LoginPage()),
         GetPage(name: HomePage.routeName, page: () => HomePage()),
       ],
     );
   }
-
 }
+
